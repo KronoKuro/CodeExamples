@@ -1,0 +1,10 @@
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\bin\Debug\CodeExemples.exe.config
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\bin\Debug\CodeExemples.exe
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\bin\Debug\CodeExemples.pdb
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\obj\Debug\CodeExemples.csprojAssemblyReference.cache
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\obj\Debug\CodeExemples.csproj.CoreCompileInputs.cache
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\obj\Debug\CodeExemples.exe
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\obj\Debug\CodeExemples.pdb
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\bin\Debug\System.ValueTuple.dll
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\bin\Debug\System.ValueTuple.xml
+C:\Users\Pmatrosov\Desktop\ProjGit\CodeExemples\CodeExemples\obj\Debug\CodeExemples.csproj.CopyComplete
