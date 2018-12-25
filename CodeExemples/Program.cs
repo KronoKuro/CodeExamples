@@ -310,50 +310,71 @@ namespace CodeExemples
         #region Grinch
         public static string GrinchAlgoritm(string inputString)
         {
+            //https://tprg.ru/7jXg
             int magicNumber = Int32.Parse(inputString[0].ToString());
             var payLoad = "";
             //взял все кроме первого элемента
-            for(var it = 1; it < inputString.Length; it++)
+            for (var it = 1; it < inputString.Length; it++)
             {
                 payLoad = payLoad + inputString[it];
             }
             //реверс строки
             payLoad = Program.ReverseString(payLoad);
-            
+
             var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
             var outputString = "";
             int elementIndex = 0;
             char elementChar;
             int currentSum;
-            int i = payLoad.Count();
+            int i = payLoad.Count()-1;
             int j = 0;
             while (i > 0)
             {
-                
-                    var rs = payLoad[j].ToString() + payLoad[j+1].ToString();
-                    
+                if (j < payLoad.Count())
+                {
+                    var rs = payLoad[j].ToString() + payLoad[j + 1].ToString();
+
                     int temp = Int32.Parse(rs);
+
                     if (temp < 33)
                     {
                         currentSum = temp;
 
                         elementIndex = currentSum - magicNumber;
-                        elementChar = alphabet[elementIndex];
-                        outputString = outputString + elementChar;
-                        i=i-2;
+                        if (elementIndex > -1)
+                        {
+                            elementChar = alphabet[elementIndex];
+                            outputString = outputString + elementChar;
+                            i = i - 2;
+                            j = j + 2;
+                        }
+                        else
+                        {
+                            var temps = Int32.Parse(payLoad[j].ToString());
+                            elementChar = alphabet[elementIndex];
+                            outputString = outputString + elementChar;
+                            i = i - 1;
+                            j = j + 1;
+                        }
+
                     }
-                    else{
+                    else
+                    {
                         var temps = payLoad[j].ToString();
                         elementIndex = Int32.Parse(temps) - magicNumber;
-                        elementChar = alphabet[elementIndex];
-                        outputString = outputString + elementChar;
-                        i--;
+                        if (elementIndex > -1)
+                        {
+                            elementChar = alphabet[elementIndex];
+                            outputString = outputString + elementChar;
+                            i--;
+                        }
+                        j = j + 1;
                     }
                     //тут надо брать первый символ а не последний
-                   
-                
-                j=j+2;
-                
+                }
+
+
+
             }
             return outputString;
         }
@@ -448,8 +469,8 @@ namespace CodeExemples
             Console.WriteLine(path.CurrentPath);
             #endregion Path
             #region GrinchAlgoritm
-            var inpustring = "770627312802201"; // "52250315091"; //назара //442513151 кику //55071024170 виола
-
+            var inpustring = "6603260916081"; // "52250315091"; //назара //442513151 кику //55071024170 виола
+            //6603260916081 Ламара
 
             Console.WriteLine("grinch " + GrinchAlgoritm(inpustring));
             #endregion GrinchAlgoritm
