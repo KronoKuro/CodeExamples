@@ -7,8 +7,79 @@ using System.Threading.Tasks;
 
 namespace CodeExemples
 {
+
+    #region Path
+    class Path
+    {
+        public string CurrentPath { get; private set; }
+
+        public Path(string path)
+        {
+            this.CurrentPath = path;
+        }
+
+        public void Cd(string newPath)
+        {
+            List<string> stringArray = CurrentPath.Split('/').ToList();
+            stringArray = stringArray.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            if (newPath.Contains(".."))
+            {
+                string[] arraySplit = { "..", "/" };
+                List<string> changeInDirectory = newPath.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries).ToList();
+                var countChangeDirectory = changeInDirectory.Count;
+                foreach (var item in changeInDirectory)
+                {
+                    stringArray[stringArray.Count - countChangeDirectory] = item;
+                    countChangeDirectory--;
+                }
+                var resultArray = new List<string>();
+                foreach (var item in stringArray)
+                {
+                    resultArray.Add('/' + item);
+                }
+                CurrentPath = String.Join("", resultArray.ToArray());
+            }else
+            {
+
+            }
+        }
+    }
+    #endregion Path
+
     class Program
     {
+        #region TrainComposition
+        public class TrainComposition
+        {
+            List<int> arrayWagon = new List<int>();
+
+            public void AttachWagonFromLeft(int wagonId)
+            {
+                arrayWagon.Insert(0, wagonId);
+            }
+
+            public void AttachWagonFromRight(int wagonId)
+            {
+                arrayWagon.Add(wagonId);
+            }
+
+            public int DetachWagonFromLeft()
+            {
+                var detachWagonLeft = arrayWagon[0];
+                arrayWagon.Remove(detachWagonLeft);
+                return detachWagonLeft;
+            }
+
+            public int DetachWagonFromRight()
+            {
+                var detachWagonRight = arrayWagon[arrayWagon.Count - 1];
+                arrayWagon.Remove(detachWagonRight);
+                return detachWagonRight;
+            }
+
+        }
+        #endregion TrainComposition
+
         #region alertDao
         //alertDao сервис для отправки сообщений
         public interface IAlertDAO
@@ -17,7 +88,7 @@ namespace CodeExemples
             DateTime GetAlert(Guid id);
         }
 
-        public class AlertService 
+        public class AlertService
         {
             //private readonly AlertDao storage = new AlertDao();
             private IAlertDAO storage;
@@ -127,12 +198,12 @@ namespace CodeExemples
         public static bool Contains(Node root, int value)
         {
             if (root.Value == value)
-            { 
+            {
                 return true;
             }
             else
             {
-                if(Program.Contains(root.Right, value))
+                if (Program.Contains(root.Right, value))
                 {
                     return true;
                 }
@@ -158,7 +229,7 @@ namespace CodeExemples
             Tuple<int, int> result;
             var Item1 = 0;
             var Item2 = 0;
-            for (var i=0; i < list.Count-1; i++)
+            for (var i = 0; i < list.Count - 1; i++)
             {
                 Item1 = list[i];
                 for (var j = list.Count() - 1; j > 0; j--)
@@ -193,7 +264,7 @@ namespace CodeExemples
             var nameArray2 = names2.ToList();
 
             List<string> result = nameArray1;
-            foreach(var item in nameArray2)
+            foreach (var item in nameArray2)
             {
                 result.Add(item);
             }
@@ -202,16 +273,16 @@ namespace CodeExemples
             for (var i = 0; i < result.Count() - 1; i++)
             {
                 var count = 0;
-                for(var j = result.Count()-1; j  > 0; j--)
+                for (var j = result.Count() - 1; j > 0; j--)
                 {
-                    if(result[i] == result[j])
+                    if (result[i] == result[j])
                     {
                         count++;
-                        if(count > 1)
+                        if (count > 1)
                         {
                             result.Remove(result[j]);
                         }
-                        
+
                     }
                 }
             }
@@ -225,9 +296,9 @@ namespace CodeExemples
         public static int CountNumbers(int[] sortedArray, int lessThan)
         {
             var i = 0;
-            foreach(var item in sortedArray)
+            foreach (var item in sortedArray)
             {
-                if(item < lessThan)
+                if (item < lessThan)
                 {
                     i++;
                 }
@@ -235,6 +306,59 @@ namespace CodeExemples
             return i;
         }
         #endregion SortedSearch
+
+        #region Grinch
+        public static string GrinchAlgoritm(string inputString)
+        {
+            int magicNumber = Int32.Parse(inputString[0].ToString());
+            var payLoad = "";
+            //взял все кроме первого элемента
+            for(var it = 1; it < inputString.Length; it++)
+            {
+                payLoad = payLoad + inputString[it];
+            }
+            //реверс строки
+            payLoad = Program.ReverseString(payLoad);
+            
+            var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+            var outputString = "";
+            int elementIndex = 0;
+            char elementChar;
+            int currentSum;
+            int i = payLoad.Count();
+            int j = 0;
+            while (i > 0)
+            {
+                
+                    var rs = payLoad[j].ToString() + payLoad[j+1].ToString();
+                    
+                    int temp = Int32.Parse(rs);
+                    if (temp < 33)
+                    {
+                        currentSum = temp;
+
+                        elementIndex = currentSum - magicNumber;
+                        elementChar = alphabet[elementIndex];
+                        outputString = outputString + elementChar;
+                        i=i-2;
+                    }
+                    else{
+                        var temps = payLoad[j].ToString();
+                        elementIndex = Int32.Parse(temps) - magicNumber;
+                        elementChar = alphabet[elementIndex];
+                        outputString = outputString + elementChar;
+                        i--;
+                    }
+                    //тут надо брать первый символ а не последний
+                   
+                
+                j=j+2;
+                
+            }
+            return outputString;
+        }
+        
+        #endregion Grinch
 
         static void Main(string[] args)
         {
@@ -297,7 +421,7 @@ namespace CodeExemples
             Console.WriteLine(Access.Owner.HasFlag(Access.Editor));
             #endregion Flags
             #region DecoratorStream
-            byte[] message = new byte[] { 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x2c, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x21 };
+           /* byte[] message = new byte[] { 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x2c, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x21 };
             using (MemoryStream stream = new MemoryStream())
             {
                 using (DecoratorStream decoratorStream = new DecoratorStream(stream, "First line: "))
@@ -306,11 +430,29 @@ namespace CodeExemples
                     stream.Position = 0;
                     Console.WriteLine(new StreamReader(stream).ReadLine());  //should print "First line: Hello, world!"
                 }
-            }
+            }*/
             #endregion DecoratorStream
             #region SortedSearch
             Console.WriteLine(Program.CountNumbers(new int[] { 1, 3, 5, 7 }, 4));
             #endregion
+            #region TrainComposition
+            TrainComposition tree = new TrainComposition();
+            tree.AttachWagonFromLeft(7);
+            tree.AttachWagonFromLeft(13);
+            Console.WriteLine(tree.DetachWagonFromRight()); // 7 
+            Console.WriteLine(tree.DetachWagonFromLeft()); // 13
+            #endregion TrainComposition
+            #region Path
+            Path path = new Path("/a/b/c/d");   //  '/a/b/c/x'.
+            path.Cd("../x/../k");
+            Console.WriteLine(path.CurrentPath);
+            #endregion Path
+            #region GrinchAlgoritm
+            var inpustring = "770627312802201"; // "52250315091"; //назара //442513151 кику //55071024170 виола
+
+
+            Console.WriteLine("grinch " + GrinchAlgoritm(inpustring));
+            #endregion GrinchAlgoritm
             Console.ReadKey();
         }
 
