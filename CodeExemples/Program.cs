@@ -335,8 +335,12 @@ namespace CodeExemples
                     var rs = payLoad[j].ToString() + payLoad[j + 1].ToString();
 
                     int temp = Int32.Parse(rs);
+                    if((temp - magicNumber) > 32)
+                    {
+                        temp = Int32.Parse(payLoad[j].ToString());
+                    }
 
-                    if (temp < 33)
+                    if ((temp-magicNumber) < 32)
                     {
                         currentSum = temp;
 
@@ -367,8 +371,17 @@ namespace CodeExemples
                             elementChar = alphabet[elementIndex];
                             outputString = outputString + elementChar;
                             i--;
+                            j = j + 1;
+                        }else
+                        {
+                            temps = payLoad[j].ToString() + payLoad[j+1].ToString();
+                            elementIndex = Int32.Parse(temps) - magicNumber;
+                            elementChar = alphabet[elementIndex];
+                            outputString = outputString + elementChar;
+                            i = i-2;
+                            j = j + 2;
                         }
-                        j = j + 1;
+                        
                     }
                     //тут надо брать первый символ а не последний
                 }
@@ -469,7 +482,7 @@ namespace CodeExemples
             Console.WriteLine(path.CurrentPath);
             #endregion Path
             #region GrinchAlgoritm
-            var inpustring = "6603260916081"; // "52250315091"; //назара //442513151 кику //55071024170 виола
+            var inpustring = "52201424112"; // "52250315091"; //назара //442513151 кику //55071024170 виола
             //6603260916081 Ламара
 
             Console.WriteLine("grinch " + GrinchAlgoritm(inpustring));
